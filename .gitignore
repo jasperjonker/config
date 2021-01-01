@@ -1,0 +1,12 @@
+# Ignore everthing
+*
+
+# Except
+!.gitignore
+!starship.toml
+!alacritty
+!mako
+!nnn
+!nvim
+!sway
+!waybar
