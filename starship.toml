@@ -1,0 +1,139 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# GIT
+[git_branch]
+symbol = "🌱 "
+# truncation_length = 10
+# truncation_symbol = ""
+
+[git_commit]
+commit_hash_length = 4
+
+[git_state]
+progress_divider = " of "
+cherry_pick = "🍒 PICKING"
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷‍"
+stashed = "📦"
+modified = "📝"
+staged.value = "++"
+staged.style = "green"
+staged_count.enabled = true
+staged_count.style = "green"
+renamed = "👅"
+deleted = "🗑"
+
+[conda]
+style = "dimmed green"
+
+[crystal]
+symbol = "✨ "
+style = "bold blue"
+
+[docker_context]
+symbol = "🐋 "
+
+[dotnet]
+symbol = "🥅 "
+style = "green"
+heuristic = false
+
+[elixir]
+symbol = "🔮 "
+
+[elm]
+symbol = " "
+
+[env_var]
+variable = "SHELL"
+default = "unknown shell"
+
+[erlang]
+symbol = "e "
+
+[golang]
+symbol = "🏎💨 "
+
+[jobs]
+symbol = "+ "
+threshold = 4
+
+[julia]
+symbol = "∴ "
+
+[nim]
+style = "yellow"
+symbol = "🎣 "
+
+[nodejs]
+symbol = "🤖 "
+
+[package]
+symbol = "🎁 "
+
+[ocaml]
+symbol = "🐪 "
+
+[php]
+symbol = "🔹 "
+
+[singularity]
+symbol = "📦 "
+
+[terraform]
+symbol = "🏎💨 "
+
+[username]
+disabled = false
+
+[zig]
+symbol = "⚡️ "
+
+[ruby]
+symbol = "🔺 "
+
+[rust]
+symbol = "⚙️ "
+
+[java]
+symbol = "🌟 "
+
+[hostname]
+ssh_only = true
+prefix = "⟪"
+suffix = "⟫"
+trim_at = ".local"
+disabled = false
+
+[aws]
+style = "bold blue"
+symbol = "🅰 "
+displayed_items = "region"
+[aws.region_aliases]
+ap-southeast-2 = "au"
+us-east-1 = "va"
+
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡️"
+discharging_symbol = "💀"
+
+[[battery.display]]
+threshold = 10
+style = "bold red"
+
+[[battery.display]]  # "bold yellow" style when capacity is between 10% and 30%
+threshold = 30
+style = "bold yellow"
+
+[character]
+# symbol = "➜"
+error_symbol = "✗"
+use_symbol_for_status = false
+
