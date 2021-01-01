@@ -16,9 +16,11 @@
 
 !nvim
 !nvim/**
+nvim/plugged/**
 
 !sway
 !sway/**
 
 !waybar
 !waybar/**
+

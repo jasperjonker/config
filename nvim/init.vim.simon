@@ -1,0 +1,677 @@
+"===============================================================================
+" SIMON GALLIS NEOVIM CONFIG FILE
+"===============================================================================
+"
+
+" Load Plug-Vim if it doesn't exist
+if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
+	echo "Downloading junegunn/vim-plug to manage plugins..."
+	silent !mkdir -p ~/.config/nvim/autoload/
+	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
+endif
+
+"===============================================================================
+" LOAD PLUGINS
+"===============================================================================
+
+call plug#begin('~/.config/nvim/plugged')
+
+" QOL
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-speeddating'
+Plug 'mattn/calendar-vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'mike-hearn/base16-vim-lightline'
+Plug 'mbbill/undotree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'moll/vim-bbye' " optional dependency
+Plug 'aymericbeaumet/vim-symlink'
+Plug 'mbbill/undotree'
+
+" Note taking, document creation and todo lists
+" Plug 'plasticboy/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'j718/vim-pandoc-wiki'
+Plug 'godlygeek/tabular'
+Plug 'khorser/vim-rst-ftplugin'
+Plug 'nvie/vim-rst-tables'
+" Plug 'freitass/todo.txt-vim'
+Plug 'dbeniamine/todo.txt-vim'
+Plug 'jceb/vim-orgmode'
+Plug 'habamax/vim-asciidoctor'
+Plug 'vim-scripts/utl.vim'
+" Plug 'arecarn/vim-fold-cycle'
+" Plug 'vimwiki/vimwiki'
+" Plug 'lervag/vimtex'
+
+" Navigation
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Plug 'justinmk/vim-sneak'
+" Plug 'francoiscabrol/ranger.vim'
+Plug 'ptzz/lf.vim'
+Plug 'rbgrouleff/bclose.vim'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Projects, coding and git
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-rooter'
+Plug 'majutsushi/tagbar'
+
+" LSP, autocompletion and snippets
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'thomasfaingnaert/vim-lsp-snippets'
+Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'yami-beta/asyncomplete-omni.vim'
+if has('python3')
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+    Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+endif
+
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'ncm2/ncm2'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
+" Plug 'ncm2/ncm2-gtags'
+" Plug 'roxma/nvim-yarp'
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+
+" Filetype/Frameworks
+" Plug 'chrisbra/csv.vim'
+Plug 'cespare/vim-toml'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'stevearc/vim-arduino'
+
+" Plug '907th/vim-auto-save'
+" Plug 'dag/vim-fish'
+" Plug 'gu-fan/riv.vim'
+" Plug 'jsfaint/gen_tags.vim'
+" Plug 'dylanaraps/wal.vim'
+
+call plug#end()
+
+"===============================================================================
+" Basics
+"===============================================================================
+
+" change the (local)leader 
+let mapleader="\<space>"
+" let maplocalleader="ö"
+set number
+set splitbelow splitright
+set nocompatible
+filetype on
+filetype plugin on
+filetype plugin indent on
+syntax on
+set mouse=a
+set hidden
+set updatetime=300
+highlight SignColumn ctermbg=Black
+set signcolumn=yes
+
+" Proper search
+set incsearch
+set ignorecase
+set smartcase
+set gdefault
+
+" use shell aliases
+let $BASH_ENV = '~/.config/.vim_bash_env'
+
+" Set fold cycling to tab
+let g:fold_cycle_default_mapping = 0 "disable default mappings
+
+let g:sneak#s_next = 1
+" Colorscheme
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-circus
+
+" Make diffing better: https://vimways.org/2018/the-power-of-diff/
+set diffopt+=algorithm:patience
+set diffopt+=indent-heuristic
+
+" Folding settings
+set foldenable
+set foldlevelstart=99
+set foldmethod=expr
+  \ foldexpr=lsp#ui#vim#folding#foldexpr()
+  \ foldtext=lsp#ui#vim#folding#foldtext()
+
+" colorcolumn 
+set colorcolumn=81
+highlight ColorColumn ctermbg=DarkGrey
+
+" Tabexpand and tabstop settings
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
+" Scroll further than the cursor
+set sidescroll=10
+set scrolloff=10
+
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+
+" Setup vimtex with autosave
+let g:vimtex_view_method = 'zathura'
+let g:auto_save_events = ["InsertLeave", "TextChanged"]
+autocmd FileType tex let g:auto_save = 1
+autocmd FileType tex let g:auto_save_silent = 1
+
+" Persistent undo
+set undofile " Maintain undo history between sessions
+set undodir=~/.config/nvim/undodir
+
+" Lightline statusline
+let g:lightline = {
+      \ 'colorscheme': 'base16_circus',
+      \ }
+
+" Leave paste mode when leaving insert mode
+autocmd InsertLeave * set nopaste
+
+" Set tags file to .tags
+set tags=.tags
+let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_project_root = ['Rakefile', '.git/', '.root']
+let g:gutentags_add_default_project_roots = 0
+
+"===============================================================================
+" git: Fugitive + gitgutter
+"===============================================================================
+
+let g:rooter_patterns = ['Rakefile', '.git/', '.git', '.root']
+let g:fugitive_gitlab_domains = ['https://gitlab.databiz.ch', 'https://clavion.miromico.ch']
+let g:gitlab_api_keys = {'gitlab.databiz.ch': 'kfHix7sV9Gg25Df9josV', 'clavion.miromico.ch': 'z_2F4z1p6y8p7rsAZxNo' }
+
+"===============================================================================
+" hex editing using xdd-format
+"===============================================================================
+
+augroup Binary
+  au!
+  au BufReadPre  *.bin,*.hex let &bin=1
+  au BufReadPost *.bin,*.hex if &bin | %!xxd
+  au BufReadPost *.bin,*.hex set ft=xxd | endif
+  au BufWritePre *.bin,*.hex if &bin | %!xxd -r
+  au BufWritePre *.bin,*.hex endif
+  au BufWritePost *.bin,*.hex if &bin | %!xxd
+  au BufWritePost *.bin,*.hex set nomod | endif
+augroup END
+
+
+"===============================================================================
+" Quickfix toggling 
+"===============================================================================
+
+function! GetBufferList()
+  redir =>buflist
+  silent! ls!
+  redir END
+  return buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let buflist = GetBufferList()
+  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+  endif
+  let winnr = winnr()
+  exec(a:pfx.'open')
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
+
+"===============================================================================
+" FZF 
+"===============================================================================
+
+" Open fzf to select a word correction
+function! FzfSpellSink(word)
+  exe 'normal! "_ciw'.a:word
+endfunction
+
+function! FzfSpell()
+  let suggestions = spellsuggest(expand("<cword>"))
+  return fzf#run({'source': suggestions, 'sink': function("FzfSpellSink"), 'down': 10 })
+endfunction
+
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+
+" Customize fzf colors to match my color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+function! s:format_qf_line(line)
+  let parts = split(a:line, ':')
+  return { 'filename': parts[0]
+         \,'lnum': parts[1]
+         \,'col': parts[2]
+         \,'text': join(parts[3:], ':')
+         \ }
+endfunction
+
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 }}
+
+function! s:qf_to_fzf(key, line) abort
+  let l:filepath = expand('#' . a:line.bufnr . ':p')
+  return l:filepath . ':' . a:line.lnum . ':' . a:line.col . ':' . a:line.text
+endfunction
+
+function! s:fzf_to_qf(filtered_list) abort
+  let list = map(a:filtered_list, 's:format_qf_line(v:val)')
+  if len(list) > 0
+    call setqflist(list)
+    copen
+  endif
+endfunction
+
+command! FzfQF call fzf#run({
+      \ 'source': map(getqflist(), function('<sid>qf_to_fzf')),
+      \ 'down':   '20',
+      \ 'sink*':   function('<sid>fzf_to_qf'),
+      \ 'options': '--reverse --multi --bind=ctrl-a:select-all,ctrl-d:deselect-all --prompt "quickfix> "',
+      \ })
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit', 
+  \ 'ctrl-q': function('s:build_quickfix_list')}
+
+"
+"===============================================================================
+" Distraction free 
+"===============================================================================
+
+" autocmd! User GoyoEnter Limelight
+" autocmd! User GoyoLeave Limelight!
+
+"===============================================================================
+" Markup (rst, markdown, org, riv)
+"===============================================================================
+
+function! Open_diary_file() abort
+  let diary_dir = expand(strftime("$HOME/notes/diary/%Y/%B/"))
+  let diary_file = expand(strftime("$HOME/notes/diary/%Y/%B/%Y-%m-%d.md"))
+  let time = strftime("%H:%M")
+  let header = strftime("%A, %d %B %Y")
+
+  if !filereadable(diary_file)
+    silent execute "!" . "mkdir -p " . diary_dir
+    silent execute "!" . "touch " . diary_file
+    execute "edit " . fnameescape(diary_file)
+    execute "normal i# " . header
+    execute "put _"
+    execute "put _"
+    execute "normal i##  [" . time . "]\<esc>F[i"
+    startinsert
+  else
+    execute "edit " . fnameescape(diary_file)
+    execute "normal G"
+    execute "put _"
+    execute "put _"
+    execute "normal i##  [" . time . "]\<esc>F[i"
+    startinsert
+  endif
+endfunction
+
+command! Diary call Open_diary_file()
+
+" let g:org_indent = 1
+" let g:org_agenda_files = ['~/org/projects.org', '~/org/inbox.org', '~/org/tickler.org']
+" :let g:org_todo_keywords=['TODO', 'NEXT', 'WAITING', '|', 'DONE', 'DELEGATED', 'CANCELED']
+
+" let g:vim_markdown_no_extensions_in_markdown = 0
+" let g:vim_markdown_conceal = 1
+" set conceallevel=0
+
+" let g:rst_fold_enabled = 1
+
+" Translation stuff, default from english to german
+let g:translate#default_languages = {
+      \ 'de': 'en',
+      \ 'en': 'de'
+      \ }
+
+"===============================================================================
+" LSP, autocompletion and snippets
+"===============================================================================
+
+let g:lsp_virtual_text_enabled = 0
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_highlights_enabled = 0
+let g:lsp_highlight_references = 1
+
+highlight LspErrorText ctermfg=Red ctermbg=18
+highlight LspInformationText ctermbg=18
+
+let g:lsp_signs_priority = 11
+let g:lsp_signs_error = {'text': '✗'}
+let g:lsp_signs_warning = {'text': ''}
+let g:lsp_signs_hint = {'text': ''}
+let g:lsp_signs_information = {'text': ''}
+
+" Close preview window with <esc>
+autocmd User lsp_float_opened nmap <buffer> <silent> <esc>
+      \ <Plug>(lsp-preview-close)
+autocmd User lsp_float_closed nunmap <buffer> <esc>
+
+" Registering Sources
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ }))
+
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+
+if has('python3')
+    let g:UltiSnipsExpandTrigger="<c-e>"
+    let g:UltiSnipsJumpForwardTrigger	= "<Tab>"
+    let g:UltiSnipsJumpBackwardTrigger	= "<S-Tab>"
+    call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+        \ 'name': 'ultisnips',
+        \ 'whitelist': ['*'],
+        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+        \ }))
+endif
+
+" Registering languageservers
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd', '-background-index']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
+
+" if executable('ccls')
+"    au User lsp_setup call lsp#register_server({
+"       \ 'name': 'ccls',
+"       \ 'cmd': {server_info->['ccls']},
+"       \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+"       \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
+"       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+"       \ })
+" endif
+
+if executable('html-languageserver')                         
+  au User lsp_setup call lsp#register_server({               
+    \ 'name': 'html-languageserver',                     
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},                                   
+    \ 'whitelist': ['html'],                             
+  \ })                                                       
+endif 
+
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'javascript support using typescript-language-server',
+      \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+      \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact']
+      \ })
+      " \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
+endif
+
+if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'javascript support using typescript-language-server',
+      \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+      \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.git/..'))},
+      \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact']
+      \ })
+endif
+
+"===============================================================================
+" Mappings
+"===============================================================================
+
+" Move through wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+" Make shortcut
+nnoremap <leader>mm :make<cr>
+nnoremap <leader>ma :make -C application/<cr>
+nnoremap <leader>mc :make -C application/ clean<cr>
+nnoremap <leader>mf :make -C application/ format<cr>
+nnoremap <leader>md :make -C application/ jdebug<cr>
+nnoremap <leader>mlh :make -C application/ jload<cr>
+nnoremap <leader>mlb :make -C application/ jloadbl<cr>
+nnoremap <leader>mle :make -C application/ jloadee<cr>
+
+" Arduino shortcut
+nnoremap <buffer> <leader>am :ArduinoVerify<CR>
+nnoremap <buffer> <leader>au :ArduinoUpload<CR>
+nnoremap <buffer> <leader>ad :ArduinoUploadAndSerial<CR>
+nnoremap <buffer> <leader>ab :ArduinoChooseBoard<CR>
+nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
+
+"Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" fold cycling
+let g:fold_cycle_default_mapping = 0
+nmap <leader><Tab> <Plug>(fold-cycle-open)
+nmap <leader><S-Tab> <Plug>(fold-cycle-close)
+
+" Jump to start and end of line using the home row keys
+nmap H ^
+nmap L $
+vmap H ^
+vmap L $
+omap H ^
+omap L $
+
+"save all open buffers and goto last used buffer
+nnoremap <leader>w :wa<cr>
+nnoremap <leader><leader> <c-^>
+
+"grep the word under cursor
+nnoremap <leader>* :Rg <c-r><c-w><cr>
+
+"substitute the word under cursor
+nnoremap <leader>s* :%s/<c-r><c-w>/
+
+" Remove search highlight with Esc
+nnoremap <esc> :noh<return><esc>
+
+" Insert new lines without going into insert mode
+nmap <leader><CR> :put _<CR>k
+nmap <leader><Backspace> :put! _<CR>j
+
+" Ranger stuff
+" let g:ranger_map_keys = 0
+" nmap <leader>f :Ranger<CR>
+
+" LF stuff
+let g:lf_replace_netrw = 1
+
+" http://vim.wikia.com/wiki/Avoid_the_escape_key
+inoremap jk <Esc>
+vnoremap jk <Esc>
+" inoremap kj <Esc>
+" vnoremap kj <Esc>
+
+" Create a timestamp, without date
+nmap <localleader>t Go<CR><CR>##<space><C-R>=strftime("%H:%M")<CR><CR><CR>
+nmap <localleader>d i#<space><C-R>=strftime("%A, %d. %B %Y")<CR><esc>öt
+
+" Neat X clipboard integration
+noremap <leader>p :read !xsel --clipboard --output<cr>
+
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+nnoremap  <leader>yb :w !xsel -ib<cr><cr>
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+" Git
+nmap <leader>gs :Gstatus<cr>
+nmap <leader>gc :Gcommit<cr>i
+nmap <leader>gl :Glog<cr>
+nmap <leader>gb :Gblame<cr>
+nmap <leader>gw :Gwrite<cr>
+nmap <leader>gvd :Gvdiffsplit<cr>
+nmap <leader>go :Gbrowse<cr>
+nmap <leader>gpl :Gpull<cr>
+nmap <leader>gps :Gpush<cr>
+
+" Edit hotkeys
+nmap <leader>ef :Files<cr>
+nmap <leader>eb :Buffers<cr>
+nmap <leader>eg :GFiles<cr>
+nmap <leader>eh :History<cr>
+nmap <leader>ev :e $HOME/.config/nvim/init.vim<CR>
+nmap <leader>et :e $HOME/notes/todo.txt<CR>
+nmap <leader>ed :Diary<CR>
+nmap <leader>ew :e $HOME/notes/index.md<CR>
+
+" wiki hotkeys
+
+" " org hotkeys
+" nmap <leader>oi :e $HOME/org/inbox.org<CR>
+" nmap <leader>op :e $HOME/org/projects.org<CR>
+" nmap <leader>ot :e $HOME/org/tickler.org<CR>
+" nmap <leader>os :e $HOME/org/someday.org<CR>
+" nmap <leader>ol :e $HOME/org/lists.org<CR>
+" nmap <leader>oa :e $HOME/org/archive.org<CR>
+" nmap <leader>od :Diary<CR>
+" nmap <localleader>t <plug>OrgTodoToggleNonInteractive
+
+" Search hotkeys
+nmap <leader>sg :Rg 
+nmap <leader>sq :FzfQF<cr>
+nmap <leader>sc :Commands<cr>
+nmap <leader>sw :Windows<cr>
+nmap <leader>st :Tags<cr>
+nmap <leader>sm :Maps<cr>
+nmap <leader>sl :Locate 
+nmap <leader>shc :History:<cr>
+nmap <leader>shs :History/<cr>
+nmap <leader>shg :Commits<cr>
+
+" Toggle hotkeys
+nmap <Leader>tf :Goyo<CR>
+nmap <Leader>tt :TagbarToggle<CR>
+xmap <Leader>tf :Goyo<CR>
+nmap <leader>tn :NERDTreeToggle<cr>
+nmap <leader>th :set list!<CR>
+nnoremap <silent> <leader>tw :set wrap! wrap?<CR><Paste>
+nmap <leader>tg :GitGutterToggle<cr>
+nnoremap <leader>ts :setlocal spell! spelllang=en_us<cr>
+nmap <silent> <leader>tl :call ToggleList("Location List", 'l')<CR>
+nmap <silent> <leader>tq :call ToggleList("Quickfix List", 'c')<CR>
+
+" Spelling
+nnoremap z= :call FzfSpell()<CR>
+
+" Translation
+" nnoremap <silent> <leader>tt :Translate<CR>
+" vnoremap <silent> <leader>tv :TranslateVisual<CR>
+" vnoremap <silent> <leader>tr :TranslateReplace<CR>
+
+" Popup
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-g>\<C-g>\<cr>" : "\<cr>"
+
+" LSP keymaps
+nmap K <plug>(lsp-hover)
+nmap gd <plug>(lsp-definition)
+nmap <leader>lr <plug>(lsp-rename)
+nmap <leader>ld <plug>(lsp-declaration)
+nmap <leader>ls <plug>(lsp-status)
+nmap <leader>la <plug>(lsp-code-action)
+nmap [e <plug>(lsp-previous-error)
+nmap ]e <plug>(lsp-next-error)
+nmap [w <plug>(lsp-previous-warning)
+nmap ]w <plug>(lsp-next-warning)
+nmap [d <plug>(lsp-previous-diagnostic)
+nmap ]d <plug>(lsp-next-diagnostic)
+nmap [r <plug>(lsp-previous-reference)
+nmap ]r <plug>(lsp-next-reference)
+xmap <leader>lf <plug>(lsp-document-range-format)
+nmap <leader>lf <plug>(lsp-document-format)
+
