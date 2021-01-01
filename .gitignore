@@ -4,6 +4,7 @@
 # Except
 !.gitignore
 !starship.toml
+!flake8
 
 !alacritty
 !alacritty/**
