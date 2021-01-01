@@ -4,9 +4,21 @@
 # Except
 !.gitignore
 !starship.toml
+
 !alacritty
+!alacritty/**
+
 !mako
+!mako/**
+
 !nnn
+!nnn/**
+
 !nvim
+!nvim/**
+
 !sway
+!sway/**
+
 !waybar
+!waybar/**

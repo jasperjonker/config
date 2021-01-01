@@ -1,0 +1,49 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+#battery	/home/jjonker/.config/waybar/style.css	/^#battery,$/;"	i	language:CSS
+#battery 	/home/jjonker/.config/waybar/style.css	/^#battery {$/;"	i	language:CSS
+#battery.critical 	/home/jjonker/.config/waybar/style.css	/^#battery.critical {$/;"	i	language:CSS
+#battery.critical.discharging 	/home/jjonker/.config/waybar/style.css	/^#battery.critical.discharging {$/;"	i	language:CSS
+#battery.warning 	/home/jjonker/.config/waybar/style.css	/^#battery.warning {$/;"	i	language:CSS
+#battery.warning.discharging 	/home/jjonker/.config/waybar/style.css	/^#battery.warning.discharging {$/;"	i	language:CSS
+#clock	/home/jjonker/.config/waybar/style.css	/^#clock,$/;"	i	language:CSS
+#clock 	/home/jjonker/.config/waybar/style.css	/^#clock {$/;"	i	language:CSS
+#cpu	/home/jjonker/.config/waybar/style.css	/^#cpu,$/;"	i	language:CSS
+#cpu 	/home/jjonker/.config/waybar/style.css	/^#cpu {$/;"	i	language:CSS
+#cpu.critical 	/home/jjonker/.config/waybar/style.css	/^#cpu.critical {$/;"	i	language:CSS
+#cpu.warning 	/home/jjonker/.config/waybar/style.css	/^#cpu.warning {$/;"	i	language:CSS
+#custom-keyboard-layout	/home/jjonker/.config/waybar/style.css	/^#custom-keyboard-layout,$/;"	i	language:CSS
+#custom-recorder 	/home/jjonker/.config/waybar/style.css	/^#custom-recorder {$/;"	i	language:CSS
+#custom-spotify 	/home/jjonker/.config/waybar/style.css	/^#custom-spotify {$/;"	i	language:CSS
+#custom-storage 	/home/jjonker/.config/waybar/style.css	/^#custom-storage {$/;"	i	language:CSS
+#custom-weather 	/home/jjonker/.config/waybar/style.css	/^#custom-weather {$/;"	i	language:CSS
+#memory	/home/jjonker/.config/waybar/style.css	/^#memory,$/;"	i	language:CSS
+#memory 	/home/jjonker/.config/waybar/style.css	/^#memory {$/;"	i	language:CSS
+#memory.critical 	/home/jjonker/.config/waybar/style.css	/^#memory.critical {$/;"	i	language:CSS
+#memory.warning 	/home/jjonker/.config/waybar/style.css	/^#memory.warning {$/;"	i	language:CSS
+#mode	/home/jjonker/.config/waybar/style.css	/^#mode,$/;"	i	language:CSS
+#mode 	/home/jjonker/.config/waybar/style.css	/^#mode {$/;"	i	language:CSS
+#network	/home/jjonker/.config/waybar/style.css	/^#network,$/;"	i	language:CSS
+#network 	/home/jjonker/.config/waybar/style.css	/^#network {$/;"	i	language:CSS
+#network.disconnected 	/home/jjonker/.config/waybar/style.css	/^#network.disconnected {$/;"	i	language:CSS
+#pulseaudio	/home/jjonker/.config/waybar/style.css	/^#pulseaudio,$/;"	i	language:CSS
+#pulseaudio 	/home/jjonker/.config/waybar/style.css	/^#pulseaudio {$/;"	i	language:CSS
+#pulseaudio.muted 	/home/jjonker/.config/waybar/style.css	/^#pulseaudio.muted {$/;"	i	language:CSS
+#temperature	/home/jjonker/.config/waybar/style.css	/^#temperature,$/;"	i	language:CSS
+#temperature 	/home/jjonker/.config/waybar/style.css	/^#temperature {$/;"	i	language:CSS
+#temperature.critical 	/home/jjonker/.config/waybar/style.css	/^#temperature.critical {$/;"	i	language:CSS
+#tray 	/home/jjonker/.config/waybar/style.css	/^#tray {$/;"	i	language:CSS
+#tray 	/home/jjonker/.config/waybar/style.css	/^#tray {$/;"	i	language:CSS
+#waybar 	/home/jjonker/.config/waybar/style.css	/^#waybar {$/;"	i	language:CSS
+#window 	/home/jjonker/.config/waybar/style.css	/^#window {$/;"	i	language:CSS
+#workspaces button 	/home/jjonker/.config/waybar/style.css	/^#workspaces button {$/;"	i	language:CSS
+#workspaces button.focused 	/home/jjonker/.config/waybar/style.css	/^#workspaces button.focused {$/;"	i	language:CSS
+#workspaces button.urgent 	/home/jjonker/.config/waybar/style.css	/^#workspaces button.urgent {$/;"	i	language:CSS
+blink-critical 	/home/jjonker/.config/waybar/style.css	/^@keyframes blink-critical {$/;"	s	language:CSS
+blink-warning 	/home/jjonker/.config/waybar/style.css	/^@keyframes blink-warning {$/;"	s	language:CSS
+border-radius: 0	/home/jjonker/.config/waybar/style.css	/^    border-radius: 0;$/;"	s	language:CSS
+border: none	/home/jjonker/.config/waybar/style.css	/^    border: none;$/;"	s	language:CSS
+margin: 0	/home/jjonker/.config/waybar/style.css	/^    margin: 0;$/;"	s	language:CSS
+min-height: 0	/home/jjonker/.config/waybar/style.css	/^    min-height: 0;$/;"	s	language:CSS
+padding: 0	/home/jjonker/.config/waybar/style.css	/^    padding: 0;$/;"	s	language:CSS
+to 	/home/jjonker/.config/waybar/style.css	/^    to {$/;"	s	language:CSS
+to 	/home/jjonker/.config/waybar/style.css	/^    to {$/;"	s	language:CSS
