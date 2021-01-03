@@ -33,11 +33,12 @@ set $grim-copy ~/.config/sway/grim-copy.sh
 set $grim-focus ~/.config/sway/grim-focus.sh
 
 # Workspaces
-set $ws1 1:
-set $ws2 2:
-set $ws3 3:
-set $ws4 4:
-set $ws5 5:
+set $ws1 "1:   "
+set $ws2 "2:   "
+set $ws3 "3:   "
+set $ws4 "4:   "
+set $ws5 "5:   "
+set $ws6 "6:   "
 
 # Autostart configuration
 # -------------------------------------------------------------------------------------------------
@@ -69,12 +70,12 @@ default_border pixel 1
 hide_edge_borders smart_no_gaps
 
 smart_gaps on
-# gaps inner 2
-# gaps outer 2
+gaps inner 5
+# gaps outer 5
 
 smart_borders on
 smart_borders no_gaps
-# default_border pixel 4
+default_border pixel 3
 
 # Tag xwayland windows with [X]
 for_window [shell="xwayland"] title_format "<span>[X] %title</span>"
@@ -82,8 +83,8 @@ for_window [shell="xwayland"] title_format "<span>[X] %title</span>"
 # Waybar Tooltips don't steel focus
 no_focus [app_id="waybar"]
 for_window [app_id="waybar" floating] {
-    move position cursor
-    move down 60px # adjust if some menus still don't fit
+  move position cursor
+  move down 60px # adjust if some menus still don't fit
 }
 
 # Titlebars get resized when text with a different height gets picked up.
@@ -93,12 +94,6 @@ for_window [title=".*"] title_format %title゜
 
 # Window decoration
 # class                 border  backgr. text    indicator child_border
-# client.focused          #5e81ac #5e81ac #eceff4 #434c5e   #5e81ac
-# client.focused_inactive #4c566a #4c566a #d8dee9 #3b4252   #434c5e
-# client.unfocused        #4c566a #4c566a #d8dee9 #3b4252   #434c5e
-# client.urgent           #bf616a #bf616a #eceff4 #900000   #bf616a
-# client.placeholder      #000000 #0c0c0c #eceff4 #000000   #0c0c0c
-
 client.focused          #3F8AC2 #096BAA #eceff4 #00DA8E
 client.focused_inactive #333333 #5F676A #ffffff #484e50
 client.unfocused        #333333 #424242 #888888 #292d2e
@@ -113,12 +108,14 @@ set $menu exec $term --class=launcher -e env GLYPH_COMMAND="" GLYPH_DESKTOP="" G
 
 # Output configuration
 # -------------------------------------------------------------------------------------------------
-output * bg /home/jjonker/Pictures/Wallpapers/shades.jpg fill
-#
+
+# Wallpaper
+# output * bg /home/jjonker/Pictures/Wallpapers/shades.jpg fill
+# output * bg /home/jjonker/Pictures/Wallpapers/woman.jpg fill
+output * bg /home/jjonker/Pictures/Wallpapers/coffee.jpg fill
+
 # Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
+# output HDMI-A-1 resolution 1920x1080 position 1920,0
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 output eDP-1 scale 1
@@ -164,15 +161,32 @@ input 1133:16495:Logitech_MX_Ergo {
   scroll_factor 2
 }
 
-
 # Idle configuration
 # -------------------------------------------------------------------------------------------------
+set $lock-intern swaylock \
+  -f \
+  --screenshots \
+  --clock \
+  --indicator \
+  --indicator-radius 250 \
+  --indicator-thickness 15 \
+  --indicator-caps-lock \
+  --effect-blur 10x5 \
+  --effect-vignette 0.5:0.5 \
+  --ring-color bb00cc \
+  --key-hl-color 880033 \
+  --line-color 00000000 \
+  --inside-color 00000088 \
+  --separator-color 00000000 \
+  --grace 2 \
+  --fade-in 0.2
+
 exec swayidle -w \
-         timeout 600 exec $lock \
-         timeout 800 'swaymsg "output * dpms off"' \
-              resume 'swaymsg "output * dpms on"' \
-         before-sleep exec $lock
-         # timeout 1000 '$sleep' \
+  timeout 600 '$lock-intern' \
+  timeout 605 'swaymsg "output * dpms off"' \
+      resume 'swaymsg "output * dpms on"' \
+  before-sleep '$lock-intern'
+  # timeout 1000 '$sleep'
 
 # Inhibit Idle if a window is fullscreen for_window
 # assign [class="^.*"] inhibit_idle fullscreen for_window
@@ -291,17 +305,40 @@ mode "$mode_launcher" {
 set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
 mode "$mode_system" {
     bindsym l exec $lock, mode "default"
-    bindsym e exec swaynag -t warning -m "Sure you want to exit?" -b "Yes, exit" 'swaymsg exit'
+    bindsym e exec swaynag -t warning -m "Sure you want to exit?" -b "Yes, exit" 'swaymsg exit', mode "nag"
     bindsym s exec --no-startup-id $sleep, mode "default"
-    bindsym r exec swaynag -t warning -m "Sure you want to reboot?" -b "Yes, reboot" 'systemctl reboot', mode "default"
-    bindsym Shift+s exec swaynag -t warning -m "Sure you want to shutdown?" -b "Yes, shutdown" 'systemctl poweroff -i', mode "default"
-    bindsym Shift+r exec swaynag -t warning -m "Sure you want to go into bios?" -b "Yes" 'systemctl reboot --firmware-setup', mode "default"
+    bindsym r exec swaynag -t warning -m "Sure you want to reboot?" -b "Yes, reboot" 'systemctl reboot', mode "nag"
+    bindsym Shift+s exec swaynag -t warning -m "Sure you want to shutdown?" -b "Yes, shutdown" 'systemctl poweroff -i', mode "nag"
+    bindsym Shift+r exec swaynag -t warning -m "Sure you want to go into bios?" -b "Yes" 'systemctl reboot --firmware-setup', mode "nag"
 
     # return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+e mode "$mode_system"
+
+# Swaynag with keyboard
+set $nag exec swaynagmode
+mode "nag" {
+  bindsym {
+    Ctrl+d    mode "default"
+
+    Ctrl+c    $nag --exit
+    q         $nag --exit
+    Escape    $nag --exit
+
+    Return    $nag --confirm
+
+    Tab       $nag --select prev
+    Shift+Tab $nag --select next
+
+    Left      $nag --select next
+    Right     $nag --select prev
+
+    Up        $nag --select next
+    Down      $nag --select prev
+  }
+}
 
 # Press this key to create a qr code of the copied e.g. url
 bindsym $mod+c exec xclip -selection clipboard -o | qrencode -o - |  feh -FZ -
@@ -350,7 +387,7 @@ bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace 6
+bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
@@ -362,7 +399,7 @@ bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
 bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
