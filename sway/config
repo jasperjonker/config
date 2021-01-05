@@ -26,7 +26,7 @@ set $music flatpak run com.spotify.Client
 set $coding code
 
 # Programs
-set $sleep systemctl hybrid-sleep
+set $sleep systemctl suspend
 set $lock ~/.config/sway/lockscreen.sh
 set $grim ~/.config/sway/grim.sh
 set $grim-copy ~/.config/sway/grim-copy.sh
@@ -49,7 +49,7 @@ exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 exec mako
 
 # Run gammaset (to change color temperature)
-exec gammastep
+# exec gammastep
 
 exec $mail
 exec $chat
@@ -191,6 +191,8 @@ exec swayidle -w \
   before-sleep '$lock-intern' \
   timeout 1000 '$sleep'
 
+  # after-resume 'swaymsg "output * dpms on"'
+
 # Inhibit Idle if a window is fullscreen for_window
 # assign [class="^.*"] inhibit_idle fullscreen for_window
 # assign [app_id="^.*"] inhibit_idle fullscreen
@@ -254,7 +256,7 @@ bindsym --to-code $mod+shift+r exec $screenrecorder
 bindsym XF86Calculator exec gnome-calculator
 
 # Launch Mail
-bindsym XF86Mail exec $mail
+# bindsym XF86Mail exec $mail
 
 # Launch Browser
 bindsym XF86HomePage exec $browser
@@ -474,21 +476,21 @@ bindsym $mod+r mode "resize"
 # Custom:
 # -------------------------------------------------------------------------------------------------
 # Set quick theme switch
-set $color_dir $HOME/Documents/Personal/alacritty/_theme/alacritty-theme/themes
-set $light_color breeze.yaml
-set $dark_color base16-default-dark.yaml
+set $color_dir '~/Documents/Personal/alacritty_themes/alacritty-theme/themes'
+set $light_color 'breeze.yaml'
+set $dark_color 'campbell.yaml'
 
 # Toggle between light and dark colorscheme
-bindsym $mod+Shift+n exec alacritty-colorscheme -C $color_dir -t $light_color $dark_color
+bindsym $mod+Shift+n exec 'alacritty-colorscheme -C $color_dir -t $light_color $dark_color'
 
 # Toggle between all available colorscheme
-bindsym $mod+Shift+m exec alacritty-colorscheme -C $color_dir -T
+bindsym $mod+Shift+m exec 'alacritty-colorscheme -C $color_dir -T'
 
 # Get notification with current colorscheme
-bindsym $mod+Shift+b exec notify-send "Alacritty Colorscheme" `alacritty-colorscheme -C $color_dir -s`
+bindsym $mod+Shift+b exec notify-send "Alacritty Colorscheme: " `alacritty-colorscheme -C $color_dir -s`
 
 # Dismiss all notifications
-bindsym Shift+mod1+space exec makoctl dismiss --all
+bindsym Shift+mod1+d exec makoctl dismiss --all
 
 # Window default modes
 for_window [window_role="pop-up"] floating enable
