@@ -55,6 +55,7 @@ exec $mail
 exec $chat
 exec $music
 exec $browser
+# exec $coding
 
 # Style windows
 # -------------------------------------------------------------------------------------------------
@@ -106,7 +107,7 @@ client.urgent           #C10004 #900000 #ffffff #900000
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
 set $menu exec $term --class=launcher -e /home/jjonker/Documents/Personal/Programs/sway-launcher-desktop/sway-launcher-desktop.sh
 bindsym $mod+d exec $menu
-bindsym grave exec $menu
+# bindsym grave exec $menu
 set $menu exec $term --class=launcher -e env GLYPH_COMMAND="" GLYPH_DESKTOP="" GLYPH_PROMPT="? " sway-launcher
 
 # Output configuration
@@ -187,11 +188,12 @@ set $lock-intern swaylock \
 exec swayidle -w \
   timeout 600 '$lock-intern' \
   timeout 605 'swaymsg "output * dpms off"' \
-      resume 'swaymsg "output * dpms on"' \
+    resume 'swaymsg "output * dpms on"' \
   before-sleep '$lock-intern' \
-  timeout 1000 '$sleep'
 
   # after-resume 'swaymsg "output * dpms on"'
+
+# resume 'swaymsg "output * dpms on"' \
 
 # Inhibit Idle if a window is fullscreen for_window
 # assign [class="^.*"] inhibit_idle fullscreen for_window
@@ -386,6 +388,13 @@ assign [class="^Skype$"] $ws3
 assign [class="^Firefox$"] $ws4
 assign [class="^code$"] $ws5
 
+workspace $ws1 output eDP-1
+workspace $ws2 output eDP-1
+workspace $ws3 output eDP-1
+workspace $ws4 output eDP-1
+workspace $ws5 output DP-1
+workspace $ws6 output DP-1
+
 # workspaces
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -534,6 +543,7 @@ bindsym --locked XF86AudioPause exec playerctl pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
 
+# bindcode --locked 164 exec playerctl play-pause
 bindsym --locked XF86Tools exec playerctl play-pause
 bindsym --locked XF86Bluetooth exec playerctl previous
 bindsym --locked XF86Favorites exec playerctl next
