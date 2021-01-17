@@ -125,8 +125,16 @@ output * bg /home/jjonker/Pictures/Wallpapers/coffee.jpg fill
 output eDP-1 scale 1
 
 output eDP-1 position 0,0
-output DP-1 position 2560,0
+output HDMI-A-1 resolution 2560x1440 position 2560,0
+output DP-2 resolution 2560x1440 position 5120,0
 
+# Clamshell mode (laptop lid closes)
+set $laptop eDP-1
+exec_always clamshell.sh
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+# Scale size output 2x shortcut
 bindsym $mod+period mode "scale"
 mode "scale" {
   bindsym 1 output eDP-1 scale 1; mode "default"
