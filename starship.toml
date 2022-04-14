@@ -11,7 +11,7 @@ symbol = "🌱 "
 commit_hash_length = 4
 
 [git_state]
-progress_divider = " of "
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
 cherry_pick = "🍒 PICKING"
 
 [git_status]
@@ -24,8 +24,6 @@ stashed = "📦"
 modified = "📝"
 staged.value = "++"
 staged.style = "green"
-staged_count.enabled = true
-staged_count.style = "green"
 renamed = "👅"
 deleted = "🗑"
 
@@ -106,15 +104,14 @@ symbol = "🌟 "
 
 [hostname]
 ssh_only = true
-prefix = "⟪"
-suffix = "⟫"
+format =  "on [$hostname](bold red) "
 trim_at = ".local"
 disabled = false
 
 [aws]
 style = "bold blue"
 symbol = "🅰 "
-displayed_items = "region"
+format = 'on [$symbol($profile )(\($region\) )]($style)'
 [aws.region_aliases]
 ap-southeast-2 = "au"
 us-east-1 = "va"
@@ -134,6 +131,6 @@ style = "bold yellow"
 
 [character]
 # symbol = "➜"
-error_symbol = "✗"
-use_symbol_for_status = false
+success_symbol = "[➜](bold green) "
+error_symbol = "[✗](bold red) "
 

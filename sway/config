@@ -22,7 +22,8 @@ set $term alacritty
 set $browser firefox
 set $mail mailspring
 set $chat skypeforlinux
-set $music flatpak run com.spotify.Client
+set $music spotify
+# set $music flatpak run com.spotify.Client
 set $coding code
 
 # Programs
@@ -45,8 +46,15 @@ set $ws6 "6:   "
 # Create a pipe for wob (bar for volume/brighness control)
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
-# Run notification manager
+# Run notification manager mako
 exec mako
+# Dismiss all notifications
+bindsym Shift+mod1+d exec makoctl dismiss --all
+
+# Notification Daemon SwayNotificationCenter
+# exec swaync
+# Toggle control center
+# bindsym $mod+Shift+m exec swaync-client -t -sw
 
 # Run gammaset (to change color temperature)
 # exec gammastep
@@ -104,11 +112,11 @@ client.unfocused        #333333 #424242 #888888 #292d2e
 client.urgent           #C10004 #900000 #ffffff #900000
 
 # Use Sway Launcher Desktop
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-set $menu exec $term --class=launcher -e /home/jjonker/Documents/Personal/Programs/sway-launcher-desktop/sway-launcher-desktop.sh
-bindsym $mod+d exec $menu
-# bindsym grave exec $menu
-set $menu exec $term --class=launcher -e env GLYPH_COMMAND="" GLYPH_DESKTOP="" GLYPH_PROMPT="? " sway-launcher
+# for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+# set $menu exec $term --class=launcher -e /home/jjonker/Documents/Personal/Programs/sway-launcher-desktop/sway-launcher-desktop.sh
+# bindsym $mod+d exec $menu
+# # bindsym grave exec $menu
+# set $menu exec $term --class=launcher -e env GLYPH_COMMAND="" GLYPH_DESKTOP="" GLYPH_PROMPT="? " sway-launcher
 
 # Output configuration
 # -------------------------------------------------------------------------------------------------
@@ -116,7 +124,12 @@ set $menu exec $term --class=launcher -e env GLYPH_COMMAND="" GLYPH_DESKTOP="" G
 # Wallpaper
 # output * bg /home/jjonker/Pictures/Wallpapers/shades.jpg fill
 # output * bg /home/jjonker/Pictures/Wallpapers/woman.jpg fill
-output * bg /home/jjonker/Pictures/Wallpapers/coffee.jpg fill
+# output * bg /home/jjonker/Pictures/Wallpapers/coffee.jpg fill
+output eDP-1 bg /home/jjonker/Pictures/Wallpapers/coffee_2.jpg fill
+output DP-1 bg /home/jjonker/Pictures/Wallpapers/coffee.jpg fill
+output DP-2 bg /home/jjonker/Pictures/Wallpapers/coffee_1.jpg fill
+output DP-3 bg /home/jjonker/Pictures/Wallpapers/coffee_3.jpg fill
+output DP-4 bg /home/jjonker/Pictures/Wallpapers/colorful.jpg fill
 
 # Example configuration:
 # output HDMI-A-1 resolution 1920x1080 position 1920,0
@@ -126,7 +139,15 @@ output eDP-1 scale 1
 
 output eDP-1 position 0,0
 output HDMI-A-1 resolution 2560x1440 position 2560,0
-output DP-2 resolution 2560x1440 position 5120,0
+# output HDMI-A-1 resolution 2560x1440 position 0,0
+# output DP-2 resolution 2560x1440 position 5120,0
+output DP-1 resolution 2560x1440 position 2560,0
+
+# Monitor work left
+output DP-3 resolution 2560x1440 position 5120,0
+
+# Monitor work right
+output DP-4 resolution 2560x1440 position 2560,0
 
 # Clamshell mode (laptop lid closes)
 set $laptop eDP-1
@@ -138,7 +159,11 @@ bindswitch --reload --locked lid:off output $laptop enable
 bindsym $mod+period mode "scale"
 mode "scale" {
   bindsym 1 output eDP-1 scale 1; mode "default"
-  bindsym 2 output eDP-1 scale 2; mode "default"
+  bindsym 2 output eDP-1 scale 1.2; mode "default"
+  bindsym 3 output eDP-1 scale 1.4; mode "default"
+  bindsym 4 output eDP-1 scale 1.6; mode "default"
+  bindsym 5 output eDP-1 scale 1.8; mode "default"
+  bindsym 6 output eDP-1 scale 2; mode "default"
 
   # return to default mode
   bindsym Return mode "default"
@@ -222,6 +247,12 @@ exec swayidle -w \
 # Wofi - Rofi on wayland
 # bindsym $mod+d exec --no-startup-id wofi --show run -m -1
 #
+# Kickoff
+# bindsym $mod+d exec kickoff
+#
+# Ulauncher
+bindsym $mod+d exec ulauncher
+#
 # Sway-launcher
 
 # Key bindings
@@ -271,6 +302,9 @@ bindsym XF86Calculator exec gnome-calculator
 # Launch Browser
 bindsym XF86HomePage exec $browser
 
+# Launch dropbox on startup
+exec dropbox start
+
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
 # Despite the name, also works for non-floating windows.
@@ -293,7 +327,7 @@ bindsym $mod+f2 exec $mail
 bindsym $mod+f3 exec $chat
 bindsym $mod+f4 exec $music
 bindsym $mod+f5 exec $coding
-bindsym $mod+f6 exec firefox --new-tab https://translate.google.com/\?sl\=auto\&tl\=en\&op\=translate
+bindsym $mod+f6 exec $browser --new-tab https://translate.google.com/\?sl\=auto\&tl\=en\&op\=translate
 
 bindsym $mod+f8 notify-send $(weather)
 bindsym $mod+tab workspace back_and_forth
@@ -393,15 +427,18 @@ bindsym $mod+Shift+Right move right
 assign [class="^Spotify$"] $ws1
 assign [class="^Mailspring$"] $ws2
 assign [class="^Skype$"] $ws3
-assign [class="^Firefox$"] $ws4
+assign [class="^firefox$"] $ws4
 assign [class="^code$"] $ws5
 
 workspace $ws1 output eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output eDP-1
 workspace $ws4 output eDP-1
-workspace $ws5 output DP-1
-workspace $ws6 output DP-1
+workspace $ws1 output DP-4
+workspace $ws2 output DP-4
+workspace $ws3 output DP-4
+workspace $ws4 output DP-4
+workspace $ws5 output DP-3
 
 # workspaces
 bindsym $mod+1 workspace $ws1
@@ -505,9 +542,6 @@ bindsym $mod+Shift+m exec 'alacritty-colorscheme -C $color_dir -T'
 
 # Get notification with current colorscheme
 bindsym $mod+Shift+b exec notify-send "Alacritty Colorscheme: " `alacritty-colorscheme -C $color_dir -s`
-
-# Dismiss all notifications
-bindsym Shift+mod1+d exec makoctl dismiss --all
 
 # Window default modes
 for_window [window_role="pop-up"] floating enable
